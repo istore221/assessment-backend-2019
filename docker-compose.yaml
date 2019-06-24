@@ -1,6 +1,18 @@
-version: "3"
+version: '3'
 services:
+
   mongo:
-    image: mongo
+    container_name: mongo
+    image: mongo:4.1.13
     ports:
       - "27020:27017"
+
+  app:
+    build:
+      context: .
+    container_name: assignment-backend-2019
+    image: "istore221/assignment-backend-2019:1.0.0"
+    ports:
+     - "3000:3000"
+    links:
+      - mongo

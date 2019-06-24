@@ -1,8 +1,8 @@
 module.exports = {
   "apps": [
     {
-      "name": "your-app-name",
-      "script": "./dist/app.js",
+      "name": "assesment-backend-2019",
+      "script": "./server.js",
       "instances": 'max',
       "exec_mode": "cluster",
       "watch": false,

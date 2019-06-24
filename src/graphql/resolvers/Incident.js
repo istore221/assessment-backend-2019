@@ -1,7 +1,7 @@
-const IncidentRepository = require("../../repositories/forMongo/IncidentRepository")
+import IncidentRepository from "../../repositories/forMongo/IncidentRepository"
 
 
-module.exports  = {
+export default {
   Query: {
     incident: ( parent, { _id } ) => IncidentRepository.get( _id ),
     incidents: ( parent, { filter, options } ) => IncidentRepository.all( filter, options )

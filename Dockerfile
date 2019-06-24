@@ -6,8 +6,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm install \
+    && npm run release
 
-CMD [ "pm2-runtime", "start", "pm2.cluster.config.js", "--env", "production" ]
+WORKDIR /app/dist
+
+
+CMD [ "pm2-runtime", "start", "pm2.cluster.config.js", "--env", "development" ]
 
 EXPOSE 3000

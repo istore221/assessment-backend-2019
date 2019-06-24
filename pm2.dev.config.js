@@ -1,8 +1,8 @@
 module.exports = {
   "apps": [
     {
-      "name": "your-app-name",
-      "script": "./src/app.js",
+      "name": "assesment-backend-2019",
+      "script": "./src/server.js",
       "watch": ["src/**/*.{js,yaml}"],
       "ignore_watch": ["node_modules"],
       "exec_interpreter": "babel-node",

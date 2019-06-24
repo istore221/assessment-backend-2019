@@ -3,9 +3,13 @@
   "version": "0.0.1",
   "main": "src/server.js",
   "scripts": {
-    "prestart": "docker-compose up -d",
-    "start": "nodemon src/server.js",
-    "babel": "babel src --out-dir dist",
+    "prestart": "docker-compose up -d mongo",
+    "babel": "copyfiles .dockerignore Dockerfile package.json pm2.cluster.config.js pm2.dev.config.js test/**/* config/**/* dist && babel src --out-dir dist --copy-files",
+    "start": "cross-env NODE_ENV=development npm stop && npm run lint && pm2-dev pm2.dev.config.js",
+    "stop": "pm2 delete pm2.dev.config.js pm2.cluster.config.js",
+    "lint": "eslint src --ext .js",
+    "build": "npm run lint && npm run babel",
+    "release": "cross-env NODE_ENV=production && npm run build",
     "test": "jest"
   },
   "license": "ISC",
@@ -30,6 +34,7 @@
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-eslint": "^10.0.2",
+    "copyfiles": "^2.1.0",
     "core-js": "^3.1.4",
     "eslint": "^6.0.0",
     "jest": "^24.8.0"

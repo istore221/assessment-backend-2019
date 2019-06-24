@@ -1,7 +1,7 @@
 const { Incident, User} = require('../../models')
 const _ = require('lodash')
 
-module.exports = {
+export default {
 
   get : ( _id ) => Incident.findById( _id ).then(res=>res).catch(err=>null),
 
