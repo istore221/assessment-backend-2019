@@ -3,6 +3,29 @@
 This repository contains boilerplate for the backend test assignment.
 The server uses `Express` and `apollo-server-express` to expose a GraphQL interface. `MongoDB` is used as a database with `mongoose` as ODM.
 
+## Installation (Development)
+
+```sh
+git clone https://github.com/istore221/assessment-backend-2019.git
+cd assessment-backend-2019
+git checkout remotes/origin/kt-assignment-dev
+
+npm install
+
+vi config/default.yaml  #change db.uri to mongodb://localhost:27020/incident-management
+
+npm start
+```
+
+## Installation (Production)
+
+```sh
+git clone https://github.com/istore221/assessment-backend-2019.git
+cd assessment-backend-2019
+git checkout remotes/origin/kt-assignment-dev
+docker-compose up -d
+```
+
 ## Goal
 
 Currently, if you run `npm start`, you will see an error since there are no definitions for Apollo Server. Your task is to create these definitions according to the requirements in [Test assignment](#test-assignment).
@@ -21,7 +44,7 @@ Using the boilerplate in this repo, expose a GraphQL interface with the followin
 - Delete an incident
 - Index all incidents in the system
   - This includes filtering by fields, sorting by the date of creation and update and pagination
-  
+
 `Incident` and `User` models are defined for your convenience. There is no need to wire up the user management system.
 
 ## Evaluation
