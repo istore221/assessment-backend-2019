@@ -67,6 +67,7 @@ mutation {
 
 - Acknowledge the incident
 ```sh
+mutation {
   changeIncidentStatus (
     _id: "5d10ff9d2e095d0d08c84cb7",
     status: Acknowledged
@@ -76,6 +77,8 @@ mutation {
 
 - Resolve the incident
 ```sh
+
+mutation {
   changeIncidentStatus (
     _id: "5d10ff9d2e095d0d08c84cb7",
     status: Resolved
