@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const IncidentSchema = new mongoose.Schema({
   title:     {
@@ -17,6 +18,9 @@ const IncidentSchema = new mongoose.Schema({
     enum: ['Created', 'Acknowledged', 'Resolved']
   }
 }, { timestamps: true })
+
+IncidentSchema.plugin(mongoosePaginate)
+
 
 const Incident = mongoose.model('Incident', IncidentSchema)
 

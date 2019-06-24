@@ -1,0 +1,67 @@
+extend type Query {
+      incident(_id: ID!): Incident
+      incidents( filter: IncidentOptions, options: IncidentOptions ): [Incident!]
+}
+
+extend type Mutation {
+  createIncident(incident:  IncidentInput!): Incident
+  updateIncident(incident:  IncidentInputForUpdate!): String
+  changeIncidentStatus(_id:  String!, status: Status!): String
+  deleteIncident(_id:  String!): String
+  assignIncident(incident:  String!, user: String!): String
+}
+
+input IncidentOptions {
+    _id: String
+    title: String
+    description: String
+    assignee: String
+    status: Status
+    createdAt: String
+    updatedAt: String
+    page: Int
+    limit: Int
+    sort: IncidentInputForOptions
+}
+
+input IncidentInputForOptions {
+    _id: String
+    title: String
+    description: String
+    assignee: String
+    status: Status
+    createdAt: String
+    updatedAt: String
+}
+
+input IncidentInput {
+    title: String!
+    description: String
+    assignee: String
+    status: Status = Created
+}
+
+input IncidentInputForUpdate {
+    _id: ID!
+    title: String!
+    description: String
+    assignee: String
+    status: Status
+}
+
+enum Status {
+  Created
+  Acknowledged
+  Resolved
+}
+
+
+type Incident {
+    _id: ID!
+    title: String!
+    description: String
+    assignee: String
+    status: Status
+    createdAt: String
+    updatedAt: String
+}
