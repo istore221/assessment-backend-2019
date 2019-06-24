@@ -15,6 +15,7 @@ npm install
 vi config/default.yaml  #change db.uri to mongodb://localhost:27020/incident-management
 
 npm start
+#running at: http://localhost:3000/graphql
 ```
 
 ## Installation (Production)
@@ -24,6 +25,7 @@ git clone https://github.com/istore221/assessment-backend-2019.git
 cd assessment-backend-2019
 git checkout remotes/origin/kt-assignment-dev
 docker-compose up -d
+#running at: http://localhost:3000/graphql
 ```
 
 ## Goal
@@ -37,13 +39,95 @@ When you are done with the test, please send a link to your repo to your recruit
 Using the boilerplate in this repo, expose a GraphQL interface with the following features:
 
 - Raise (create) an incident and assign it to a user with an `Engineer` role
+```sh
+mutation {
+  createIncident (incident: {
+    title: "navbar not working on mobile",
+  }){
+    _id,
+    title,
+    description,
+    assignee,
+    status,
+    createdAt,
+    updatedAt
+  }
+}
+```
+
 - Assign the incident to a user
+```sh
+mutation {
+  assignIncident (
+    incident: "5d10ff9d2e095d0d08c84cb7",
+    user: "5d10c8cc5680b90599df9041"
+  )
+}
+```
+
 - Acknowledge the incident
+```sh
+  changeIncidentStatus (
+    _id: "5d10ff9d2e095d0d08c84cb7",
+    status: Acknowledged
+  )
+}
+```
+
 - Resolve the incident
+```sh
+  changeIncidentStatus (
+    _id: "5d10ff9d2e095d0d08c84cb7",
+    status: Resolved
+  )
+}
+```
+
 - Read details about a certain incident
+```sh
+{
+  incident(_id: "5d10ff9d2e095d0d08c84cb7") {
+ 	_id,
+    title,
+    description,
+    assignee,
+    status,
+    createdAt,
+    updatedAt
+  }
+}
+
+```
+
 - Delete an incident
+
+```sh
+mutation {
+  deleteIncident (_id: "5d10ff9d2e095d0d08c84cb7")
+}
+```
+
 - Index all incidents in the system
   - This includes filtering by fields, sorting by the date of creation and update and pagination
+
+```sh
+{
+  incidents (filter: {
+	# status: Created
+  },options: {
+    page: 1,
+  	limit: 10,
+    sort: { createdAt: "ASC" }
+  }) {
+   	_id
+    title
+    assignee
+    status
+    createdAt
+    updatedAt
+  }
+}
+```
 
 `Incident` and `User` models are defined for your convenience. There is no need to wire up the user management system.
 
