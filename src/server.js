@@ -8,30 +8,45 @@ mongoose.Promise       = global.Promise
 
 const { seedUsers } = require('./db-init')
 
-mongoose.connect(config.get('db.uri'), { useNewUrlParser: true })
-  .then(async () => {
-    console.log('INFO: Connected to the database')
 
-    await seedUsers()
+export function mongo_connect(){
+    return mongoose.connect(config.get('db.uri'), { useNewUrlParser: true })
+}
 
+export const graphqlPath =  '/graphql'
+export async function setup_apollo( host, port ){
 
-    // TODO: Initialize Apollo with the required arguments as you see fit
-    const server = new ApolloServer({schema});
-    const app = express()
-    app.use(cors())
-    server.applyMiddleware({
-      app,
-      path: '/graphql'
+  // TODO: Initialize Apollo with the required arguments as you see fit
+  const server = new ApolloServer({schema});
+  const app = express()
+  app.use(cors())
+  server.applyMiddleware({
+    app,
+    path: graphqlPath
 
-    })
+  })
 
+  return app
+
+}
+
+export function db_seed(){
+  return seedUsers()
+}
+
+if (require.main === module) {
+
+  mongo_connect().then(db_seed).then(()=>{
     const { host, port } = config.get('server')
-
-    app.listen({ port }, () => {
-      console.log(`Server ready at http://${ host }:${ port }${ server.graphqlPath }`)
+    setup_apollo().then(app=>{
+      app.listen({ port }, () => {
+        console.log(`Server ready at http://${ host }:${ port }${ graphqlPath }`)
+      })
     })
-  })
-  .catch((error) => {
-    console.error(error)
-    process.exit(-1)
-  })
+
+  }).catch((error) => {
+      console.error(error)
+      process.exit(-1)
+  });
+
+}
